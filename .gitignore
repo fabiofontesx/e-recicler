@@ -16,3 +16,4 @@ build/
 web-build/
 erecicler.xcworkspace
 Podfile.lock
+node_modules

@@ -1,21 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
+import { Ubuntu_400Regular, Ubuntu_700Bold } from '@expo-google-fonts/ubuntu';
+import { useFonts } from 'expo-font'
+import { ThemeProvider } from 'styled-components/native';
+import theme from './src/styles/theme/global';
 
-export default function App() {
+import AuthProvider from './src/contexts/AuthContext';
+
+import Routes from './src/routes';
+import { NavigationContainer } from '@react-navigation/native';
+
+const App = () => {
+  let [fontsLoadded] = useFonts({
+    Roboto_400Regular,
+    Roboto_700Bold,
+    Ubuntu_400Regular,
+    Ubuntu_700Bold
+  });
+
+  if (!fontsLoadded) {
+    return null;
+  }
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider theme={theme}>
+      <AuthProvider>
+        <NavigationContainer>
+          <Routes />
+        </NavigationContainer>
+      </AuthProvider>
+
+    </ThemeProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
