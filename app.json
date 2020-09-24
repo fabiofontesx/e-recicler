@@ -34,13 +34,15 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "br.com.fabiofontex.erecicler"
+      "bundleIdentifier": "br.com.fabiofontex.erecicler",
+      "userInterfaceStyle": "light"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "br.com.fabiofontex.erecicler"
+      "package": "br.com.fabiofontex.erecicler",
+      "userInterfaceStyle": "light"
     }
   }
 }
