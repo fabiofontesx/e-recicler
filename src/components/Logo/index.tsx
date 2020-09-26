@@ -5,6 +5,7 @@ const Logo = () => {
     return (
         <Image
             source={require('../../assets/logo.png')}
+            resizeMode="contain"
         />
     );
 }

@@ -27,6 +27,9 @@ import { useNavigation } from '@react-navigation/native';
 
 type MaterialNames = "vidro" | "plastico" | "metal" | "papel";
 
+import { heightPercentageToDP, widthPercentageToDP } from '../../utils/percentToDp';
+
+
 const NewDiscart: React.FC = () => {
     const navigation = useNavigation();
 
@@ -53,7 +56,7 @@ const NewDiscart: React.FC = () => {
         }
     }
 
-    const handleGoBack = () =>{
+    const handleGoBack = () => {
         navigation.goBack();
     }
 
@@ -66,7 +69,7 @@ const NewDiscart: React.FC = () => {
                 </ButtonBack>
 
                 <HeaderText>
-                    {`Adicione os materiais para \n descarte (em gramas)`}
+                    {`Adicione os materiais para \n descarte (em kilogramas)`}
                 </HeaderText>
             </Header>
 
@@ -74,7 +77,10 @@ const NewDiscart: React.FC = () => {
                 <MaterialContainer>
                     <CardMaterial
                         materialName="Vidro"
-                        icon={<Vidro width={108} height={108} />}
+                        icon={<Vidro
+                            width={widthPercentageToDP('50%')}
+                            height={heightPercentageToDP('15%')}
+                        />}
                     />
                     <AmountContainer>
                         <AmountButton
@@ -92,7 +98,10 @@ const NewDiscart: React.FC = () => {
                 <MaterialContainer>
                     <CardMaterial
                         materialName="Plastico"
-                        icon={<Plastico width={108} height={108} />}
+                        icon={<Plastico
+                            width={widthPercentageToDP('50%')}
+                            height={heightPercentageToDP('15%')}
+                        />}
                     />
                     <AmountContainer>
                         <AmountButton
@@ -112,7 +121,10 @@ const NewDiscart: React.FC = () => {
                 <MaterialContainer>
                     <CardMaterial
                         materialName="Metal"
-                        icon={<Metal width={108} height={108} />}
+                        icon={<Metal
+                            width={widthPercentageToDP('50%')}
+                            height={heightPercentageToDP('15%')}
+                        />}
                     />
                     <AmountContainer>
                         <AmountButton
@@ -131,7 +143,10 @@ const NewDiscart: React.FC = () => {
                 <MaterialContainer>
                     <CardMaterial
                         materialName="Papel"
-                        icon={<Papel width={108} height={108} />}
+                        icon={<Papel
+                            width={widthPercentageToDP('50%')}
+                            height={heightPercentageToDP('15%')}
+                        />}
                     />
                     <AmountContainer>
                         <AmountButton

@@ -3,13 +3,13 @@ import { SvgProps } from "react-native-svg";
 
 import { Card, CardHeader, CardTitle, CardBody, CardValue } from './styles';
 
-interface Props  {
+interface Props {
     title: string;
     icon: JSX.Element;
     bodyText: string;
 }
 
-const CardInfo = ({title, icon, bodyText}: Props) => {
+const CardInfo = ({ title, icon, bodyText }: Props) => {
     return (
         <Card>
             <CardHeader>
@@ -17,6 +17,7 @@ const CardInfo = ({title, icon, bodyText}: Props) => {
                     {title}
                 </CardTitle>
                 {icon}
+
             </CardHeader>
             <CardBody>
                 <CardValue> {bodyText} </CardValue>

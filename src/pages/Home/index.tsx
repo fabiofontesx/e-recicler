@@ -3,9 +3,8 @@ import CardInfo from '../../components/CardInfo';
 
 import Container from '../../components/Container';
 import Logo from '../../components/Logo';
-import PrimaryButton from '../../components/PrimaryButton';
 
-import { WelcomeText } from './styles';
+import { WelcomeText, PrimaryButton, Main } from './styles';
 
 import Lixeira from '../../assets/lixeira.svg';
 import Dolar from '../../assets/dolar.svg';
@@ -22,7 +21,7 @@ const Home: React.FC = () => {
     return (
         <Container>
             <Logo />
-            <Container>
+            <Main>
                 <WelcomeText>
                     Bem Vindo!
                 </WelcomeText>
@@ -47,7 +46,7 @@ const Home: React.FC = () => {
                     label='Novo Descarte'
                     onPress={goToNewDiscart}
                 />
-            </Container>
+            </Main>
 
         </Container>
     );
