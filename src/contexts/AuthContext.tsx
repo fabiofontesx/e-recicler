@@ -1,7 +1,7 @@
 import React, { useContext, createContext, useState } from 'react';
+import api from '../services/api';
 
 type Email = string;
-
 interface AuthContextData {
     email?: Email;
     isAuthenticated: boolean;
@@ -9,14 +9,24 @@ interface AuthContextData {
     logout(): Promise<void>
 }
 
+interface IUserAuthenticateResponse { 
+    response: string;
+}
+interface IUserRegisterResponse {
+    user: string;
+    result: string
+}
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
-
 
 const AuthProvider: React.FC = ({ children }) => {
     const [email, setEmail] = useState<Email | undefined>(undefined);
 
-    const login = (email: Email) => {
+    const login = async (email: Email) => {
+        try{
+        }catch(err){
+
+        }
         if (email) {
             setEmail(email);
         }
