@@ -8,4 +8,5 @@ export const StyledContainer  = styled.SafeAreaView`
     background-color: ${props => props.theme.pallete.colors.primary};
     padding-top: ${Constants.statusBarHeight}px;
     align-items: center;
+    justify-content: center;
 `;
