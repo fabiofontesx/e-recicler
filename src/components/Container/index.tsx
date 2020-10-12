@@ -1,10 +1,10 @@
-import React, {FC}  from 'react';
+import React, { PropsWithChildren } from 'react';
 import { ViewProps } from 'react-native';
 
-import { StyledContainer } from './styles';
+import StyledContainer from './styles';
 
-const Container:FC<ViewProps>  = ({children}) => {
-    return <StyledContainer>{children}</StyledContainer>;
-}
+const Container = ({ children }: PropsWithChildren<ViewProps>) => (
+  <StyledContainer>{children}</StyledContainer>
+);
 
 export default Container;

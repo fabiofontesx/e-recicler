@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 import { Card, Label } from './styles';
 
 interface Props {
-    materialName: string;
-    icon: JSX.Element
+  materialName: string;
+  icon: ReactElement;
 }
 
-const CardMaterial = ({ materialName, icon }: Props) => {
-    return <Card>
-        {icon}
-        <Label> {materialName} </Label>
-    </Card>;
-}
+const CardMaterial = ({ materialName, icon }: Props) => (
+  <Card>
+    {icon}
+    <Label>{materialName}</Label>
+  </Card>
+);
 
 export default CardMaterial;
