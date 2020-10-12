@@ -6,7 +6,7 @@ import NewDiscart from '../pages/NewDiscart';
 
 const Stack = createStackNavigator();
 
-const AuthenticatedStack = () => (
+const AuthenticatedStack = ():JSX.Element => (
   <Stack.Navigator headerMode="none" initialRouteName="Home">
     <Stack.Screen name="Home" component={Home} />
     <Stack.Screen name="NewDiscart" component={NewDiscart} />

@@ -3,7 +3,7 @@ import { ViewProps } from 'react-native';
 
 import StyledContainer from './styles';
 
-const Container = ({ children }: PropsWithChildren<ViewProps>) => (
+const Container = ({ children }: PropsWithChildren<ViewProps>):JSX.Element => (
   <StyledContainer>{children}</StyledContainer>
 );
 

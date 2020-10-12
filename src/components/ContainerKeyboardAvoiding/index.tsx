@@ -6,7 +6,7 @@ import { Container } from './styles';
 const ContainerKeyboardAvoiding = ({
   children,
   ...props
-} : PropsWithChildren<KeyboardAvoidingViewProps>) => (
+}: PropsWithChildren<KeyboardAvoidingViewProps>): JSX.Element => (
   <Container
     behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     {...props}

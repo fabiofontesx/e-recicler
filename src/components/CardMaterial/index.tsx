@@ -7,7 +7,7 @@ interface Props {
   icon: ReactElement;
 }
 
-const CardMaterial = ({ materialName, icon }: Props) => (
+const CardMaterial = ({ materialName, icon }: Props):JSX.Element => (
   <Card>
     {icon}
     <Label>{materialName}</Label>

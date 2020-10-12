@@ -22,7 +22,7 @@ interface IRGetResum {
   total_recicled: number;
 }
 
-const Home: React.FC = () => {
+const Home = ():JSX.Element => {
   const themeContext = useContext(ThemeContext);
   const { userData } = useAuth();
   const navigation = useNavigation();
@@ -55,8 +55,6 @@ const Home: React.FC = () => {
       loadData();
     }, [userData?.email]),
   );
-
-  useCallback(() => {}, []);
 
   if (isLoading) {
     return (

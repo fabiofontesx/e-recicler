@@ -10,7 +10,7 @@ interface Props {
   bodyText: string | number;
 }
 
-const CardInfo = ({ title, icon, bodyText }: Props) => (
+const CardInfo = ({ title, icon, bodyText }: Props):JSX.Element => (
   <Card>
     <CardHeader>
       <CardTitle>{title}</CardTitle>
