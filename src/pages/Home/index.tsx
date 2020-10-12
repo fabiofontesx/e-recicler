@@ -40,7 +40,7 @@ const Home = ():JSX.Element => {
         try {
           setLoading(true);
           const response = await api.get<IRGetResum>(
-            `prices/user/${userData?.email}`,
+            `prices/user/${userData?.user}`,
           );
           setUserGarbageResum(response.data);
         } catch (error) {
@@ -48,12 +48,13 @@ const Home = ():JSX.Element => {
             'Erro ao buscar resumo',
             'Sistema idisponível, tente novamente mais tarde',
           );
+          console.log(error.response);
         } finally {
           setLoading(false);
         }
       };
       loadData();
-    }, [userData?.email]),
+    }, [userData?.user]),
   );
 
   if (isLoading) {

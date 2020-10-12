@@ -6,7 +6,7 @@ import { Alert } from 'react-native';
 import api from '../services/api';
 
 interface IUserData {
-  email: string | null;
+  user: string | null;
   _id: string | null;
 }
 interface AuthContextData {
@@ -50,10 +50,9 @@ const AuthProvider = ({ children }:PropsWithChildren<Element>): JSX.Element => {
 
       if (storagedToken && storagedUser) {
         const storagedUserJSON = await JSON.parse(storagedUser);
-
+        const { user, _id } = storagedUserJSON;
         api.defaults.headers.Authorization = storagedToken;
-        const { email, _id } = storagedUserJSON;
-        setUserData({ email, _id });
+        setUserData({ user, _id });
         setAuthenticated(true);
       }
 
@@ -83,7 +82,7 @@ const AuthProvider = ({ children }:PropsWithChildren<Element>): JSX.Element => {
 
       await persistUserData(response.data, token);
       setLoginLoading(false);
-      setUserData({ email, _id: response.data._id });
+      setUserData({ user: email, _id: response.data._id });
       setAuthenticated(true);
 
       console.log(`Successfully authenticated as ${email}`);
@@ -112,7 +111,7 @@ const AuthProvider = ({ children }:PropsWithChildren<Element>): JSX.Element => {
         api.defaults.headers.Authorization = token;
 
         await persistUserData(response.data, token);
-        setUserData({ email, _id: response.data._id });
+        setUserData({ user: email, _id: response.data._id });
 
         setAuthenticated(true);
       }

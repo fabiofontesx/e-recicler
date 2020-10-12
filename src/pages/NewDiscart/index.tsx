@@ -64,11 +64,11 @@ const NewDiscart = ():JSX.Element => {
   const handleNewDiscart = async () => {
     setLoading(true);
     if (userData) {
-      const { email, _id } = userData;
+      const { user, _id } = userData;
       try {
         const result = await api.put('/garbcollect', {
           _id,
-          user: email,
+          user,
           collected_garbage: ammount,
         });
 
