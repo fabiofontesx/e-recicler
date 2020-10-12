@@ -30,7 +30,7 @@ interface IUserRegisterResponse {
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-const AuthProvider = ({ children }:PropsWithChildren<Element>) => {
+const AuthProvider = ({ children }:PropsWithChildren<Element>): JSX.Element => {
   const RN_AUTH_TOKEN_STORAGE_KEY = '@RNAuth:token';
   const RN_USER_STORAGE_KEY = '@RNAuth:user';
 
