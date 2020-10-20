@@ -1,22 +1,22 @@
-import React, { useContext, useState } from "react";
-import PrimaryButton from "../../components/PrimaryButton";
-import { ActivityIndicator, Alert, Platform } from "react-native";
+import React, { useContext, useState } from 'react';
+import { ActivityIndicator, Alert, Platform } from 'react-native';
+import { ThemeContext } from 'styled-components';
+import PrimaryButton from '../../components/PrimaryButton';
 
 import {
   TextInput,
   InputContainer,
   ImageBackgroundContainer,
   BigLabel,
-} from "./styles";
+} from './styles';
 
-import ContainerKeyboardAvoiding from "../../components/ContainerKeyboardAvoiding";
-import { useAuth } from "../../contexts/AuthContext";
-import { emailValidator } from "../../utils/validators";
-import { ThemeContext } from "styled-components";
+import ContainerKeyboardAvoiding from '../../components/ContainerKeyboardAvoiding';
+import { useAuth } from '../../contexts/AuthContext';
+import { emailValidator } from '../../utils/validators';
 
-const Login = () => {
+const Login = ():JSX.Element => {
   const themeContext = useContext(ThemeContext);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const { login, isLoginLoading } = useAuth();
 
   const handleLogin = async () => {
@@ -24,23 +24,23 @@ const Login = () => {
       await login(email);
     } else {
       Alert.alert(
-        "Erro no login",
-        "E-mail invalido, digite um email valido para realizar o login"
+        'Erro no login',
+        'E-mail invalido, digite um email valido para realizar o login',
       );
     }
   };
 
-  const handleChangeEmail = (email: string) => {
-    setEmail(email.toLowerCase());
+  const handleChangeEmail = (emailInput: string) => {
+    setEmail(emailInput.toLowerCase());
   };
 
   return (
     <ContainerKeyboardAvoiding
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ImageBackgroundContainer
-        source={require("../../assets/reciclagem.png")}
-        imageStyle={{ width: "100%", height: 572 }}
+        source={require('../../assets/reciclagem.png')}
+        imageStyle={{ width: '100%', height: 572 }}
       >
         <InputContainer>
           <BigLabel>E-Recicler</BigLabel>

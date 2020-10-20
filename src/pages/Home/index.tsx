@@ -22,7 +22,7 @@ interface IRGetResum {
   total_recicled: number;
 }
 
-const Home: React.FC = () => {
+const Home = ():JSX.Element => {
   const themeContext = useContext(ThemeContext);
   const { userData } = useAuth();
   const navigation = useNavigation();
@@ -40,7 +40,7 @@ const Home: React.FC = () => {
         try {
           setLoading(true);
           const response = await api.get<IRGetResum>(
-            `prices/user/${userData?.email}`,
+            `prices/user/${userData?.user}`,
           );
           setUserGarbageResum(response.data);
         } catch (error) {
@@ -48,15 +48,14 @@ const Home: React.FC = () => {
             'Erro ao buscar resumo',
             'Sistema idisponível, tente novamente mais tarde',
           );
+          console.log(error.response);
         } finally {
           setLoading(false);
         }
       };
       loadData();
-    }, [userData?.email]),
+    }, [userData?.user]),
   );
-
-  useCallback(() => {}, []);
 
   if (isLoading) {
     return (

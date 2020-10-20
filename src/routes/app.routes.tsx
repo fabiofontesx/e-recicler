@@ -5,7 +5,7 @@ import Login from '../pages/Login';
 
 const Stack = createStackNavigator();
 
-const AppRoutes = () => (
+const AppRoutes = (): JSX.Element => (
   <Stack.Navigator headerMode="none" initialRouteName="Login">
     <Stack.Screen name="Login" component={Login} />
   </Stack.Navigator>

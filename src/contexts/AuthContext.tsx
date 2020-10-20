@@ -1,16 +1,16 @@
 import React, {
-  useContext, createContext, useState, useEffect,
+  useContext, createContext, useState, useEffect, PropsWithChildren,
 } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Alert } from 'react-native';
 import api from '../services/api';
 
 interface IUserData {
-  email: string;
-  _id: string;
+  user: string | null;
+  _id: string | null;
 }
 interface AuthContextData {
-  userData: IUserData;
+  userData: IUserData | null;
   isLoginLoading: boolean;
   isAuthenticated: boolean;
   isAppLoading: boolean;
@@ -30,11 +30,11 @@ interface IUserRegisterResponse {
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-const AuthProvider: React.FC = ({ children }) => {
+const AuthProvider = ({ children }:PropsWithChildren<Element>): JSX.Element => {
   const RN_AUTH_TOKEN_STORAGE_KEY = '@RNAuth:token';
   const RN_USER_STORAGE_KEY = '@RNAuth:user';
 
-  const [userData, setUserData] = useState<IUserData>({} as IUserData);
+  const [userData, setUserData] = useState<IUserData | null >({} as IUserData);
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [isAppLoading, setAppLoading] = useState(false);
   const [isLoginLoading, setLoginLoading] = useState(false);
@@ -46,13 +46,13 @@ const AuthProvider: React.FC = ({ children }) => {
         RN_AUTH_TOKEN_STORAGE_KEY,
       );
 
-      let storagedUser = await AsyncStorage.getItem(RN_USER_STORAGE_KEY);
+      const storagedUser = await AsyncStorage.getItem(RN_USER_STORAGE_KEY);
 
       if (storagedToken && storagedUser) {
-        storagedUser = await JSON.parse(storagedUser);
-
+        const storagedUserJSON = await JSON.parse(storagedUser);
+        const { user, _id } = storagedUserJSON;
         api.defaults.headers.Authorization = storagedToken;
-        setUserData({ email: storagedUser, _id: storagedToken._id });
+        setUserData({ user, _id });
         setAuthenticated(true);
       }
 
@@ -82,7 +82,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
       await persistUserData(response.data, token);
       setLoginLoading(false);
-      setUserData({ email, _id: response.data._id });
+      setUserData({ user: email, _id: response.data._id });
       setAuthenticated(true);
 
       console.log(`Successfully authenticated as ${email}`);
@@ -111,7 +111,7 @@ const AuthProvider: React.FC = ({ children }) => {
         api.defaults.headers.Authorization = token;
 
         await persistUserData(response.data, token);
-        setUserData({ email, _id: response.data._id });
+        setUserData({ user: email, _id: response.data._id });
 
         setAuthenticated(true);
       }
@@ -142,7 +142,7 @@ const AuthProvider: React.FC = ({ children }) => {
   };
 
   const logout = () => {
-    setUserData(undefined);
+    setUserData(null);
     return new Promise<void>((resolve) => {
       resolve();
     });

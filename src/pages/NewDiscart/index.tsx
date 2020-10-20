@@ -34,7 +34,7 @@ import api from '../../services/api';
 
 type MaterialNames = 'glass' | 'plastic' | 'metal' | 'paper';
 
-const NewDiscart: React.FC = () => {
+const NewDiscart = ():JSX.Element => {
   const navigation = useNavigation();
   const { userData } = useAuth();
   const [isLoading, setLoading] = useState(false);
@@ -62,28 +62,30 @@ const NewDiscart: React.FC = () => {
   };
 
   const handleNewDiscart = async () => {
-    const { email, _id } = userData;
     setLoading(true);
-    try {
-      const result = await api.put('/garbcollect', {
-        _id,
-        user: email,
-        collected_garbage: ammount,
-      });
-
-      if (result.status === 200) {
-        setAmmount({
-          plastic: 0, glass: 0, paper: 0, metal: 0,
+    if (userData) {
+      const { user, _id } = userData;
+      try {
+        const result = await api.put('/garbcollect', {
+          _id,
+          user,
+          collected_garbage: ammount,
         });
-        Alert.alert('Sucesso', 'Reciclagem salva com sucesso!');
+
+        if (result.status === 200) {
+          setAmmount({
+            plastic: 0, glass: 0, paper: 0, metal: 0,
+          });
+          Alert.alert('Sucesso', 'Reciclagem salva com sucesso!');
+        }
+      } catch (error) {
+        Alert.alert(
+          'Erro',
+          'Erro ao realizar a reciclagem, tente novamente mais tarde',
+        );
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      Alert.alert(
-        'Erro',
-        'Erro ao realizar a reciclagem, tente novamente mais tarde',
-      );
-    } finally {
-      setLoading(false);
     }
   };
 
