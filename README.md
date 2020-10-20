@@ -34,3 +34,6 @@ Após as instalações necessárias, na raiz do projeto execute
 expo start
 ```
 O expo iniciará o projeto e disponibilizará um QR Code, leia o QR Code utilizando o aplicativo do expo anteriormente instalado no aparelho.
+
+## Imagens
+<img src="https://github.com/fabiofontesx/e-recicler/blob/master/screenshots/login.png" width="259" height="473"/> <img src="https://github.com/fabiofontesx/e-recicler/blob/master/screenshots/home.png" width="259" height="473"/> <img src="https://github.com/fabiofontesx/e-recicler/blob/master/screenshots/new-discart.png" width="259" height="473"/>
