@@ -34,7 +34,8 @@
     "react-native-screens": "~2.10.1",
     "react-native-svg": "12.1.0",
     "react-native-web": "~0.13.12",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.2.0",
+    "expo-updates": "~0.3.3"
   },
   "devDependencies": {
     "@types/react": "~16.9.35",

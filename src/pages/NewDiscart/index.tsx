@@ -111,7 +111,7 @@ const NewDiscart: React.FC = () => {
         </ButtonBack>
 
         <HeaderText>
-          {'Adicione os materiais para \n descarte (em kilogramas)'}
+          {'Adicione os materiais para \n descarte (em gramas)'}
         </HeaderText>
       </Header>
 

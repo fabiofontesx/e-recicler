@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
 import { Ubuntu_400Regular, Ubuntu_700Bold } from '@expo-google-fonts/ubuntu';
 import { useFonts } from 'expo-font'
 import { ThemeProvider } from 'styled-components/native';
 import theme from './src/styles/theme/global';
-
+import * as Updates from 'expo-updates'
 import AuthProvider, { useAuth } from './src/contexts/AuthContext';
 
 import Routes from './src/routes';
@@ -21,6 +21,21 @@ const App = () => {
     Ubuntu_400Regular,
     Ubuntu_700Bold
   });
+
+  useEffect(() => {
+    const updateApp = async () => {
+      try{
+        const {isAvailable} = await Updates.checkForUpdateAsync();
+        if(isAvailable){
+          await Updates.fetchUpdateAsync();
+          await Updates.reloadAsync();
+        }
+      }catch(err){
+        console.error(err);
+      }
+    }
+    updateApp();
+  }, []);
 
   if (!fontsLoadded || isAppLoading) {
     return (
