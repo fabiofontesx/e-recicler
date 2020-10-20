@@ -6,7 +6,7 @@ import {
 } from '../../utils/percentToDp';
 
 export const Card = styled.View`
-  height: ${heightPercentageToDP('15%')}px;
+  height: ${heightPercentageToDP('25%')}px;
   width: ${widthPercentageToDP('70%')}px;
   border-radius: 10px;
   background: ${(props) => props.theme.pallete.colors.secondary};

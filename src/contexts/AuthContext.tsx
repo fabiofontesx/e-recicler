@@ -1,5 +1,5 @@
 import React, {
-  useContext, createContext, useState, useEffect, PropsWithChildren,
+  useContext, createContext, useState, useEffect, PropsWithChildren, ReactChild, Provider, ProviderProps, ReactNode,
 } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Alert } from 'react-native';
@@ -17,43 +17,37 @@ interface AuthContextData {
   login(email: string): Promise<void>;
   logout(): Promise<void>;
 }
-
-interface IUserAuthenticateResponse {
-  result: string;
-  _id: string;
-}
-interface IUserRegisterResponse {
-  user: string;
-  result: string;
+interface IUserResponse {
+  user?: string;
   _id: string;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-const AuthProvider = ({ children }:PropsWithChildren<Element>): JSX.Element => {
+const AuthProvider = ({ children }: PropsWithChildren<ReactNode>): JSX.Element => {
   const RN_AUTH_TOKEN_STORAGE_KEY = '@RNAuth:token';
   const RN_USER_STORAGE_KEY = '@RNAuth:user';
 
-  const [userData, setUserData] = useState<IUserData | null >({} as IUserData);
+  const [userData, setUserData] = useState<IUserData | null>({} as IUserData);
   const [isAuthenticated, setAuthenticated] = useState(false);
-  const [isAppLoading, setAppLoading] = useState(false);
+  const [isAppLoading, setAppLoading] = useState(true);
   const [isLoginLoading, setLoginLoading] = useState(false);
 
   useEffect(() => {
-    setAppLoading(true);
     const loadStoragedData = async () => {
+      setAppLoading(true);
       const storagedToken = await AsyncStorage.getItem(
         RN_AUTH_TOKEN_STORAGE_KEY,
       );
-
       const storagedUser = await AsyncStorage.getItem(RN_USER_STORAGE_KEY);
 
       if (storagedToken && storagedUser) {
-        const storagedUserJSON = await JSON.parse(storagedUser);
+        const storagedUserJSON = JSON.parse(storagedUser);
+        
         const { user, _id } = storagedUserJSON;
         api.defaults.headers.Authorization = storagedToken;
         setUserData({ user, _id });
-        setAuthenticated(true);
+        setAuthenticated(!!user);
       }
 
       setAppLoading(false);
@@ -63,7 +57,7 @@ const AuthProvider = ({ children }:PropsWithChildren<Element>): JSX.Element => {
   }, []);
 
   const persistUserData = async (
-    user: IUserAuthenticateResponse | IUserRegisterResponse,
+    user: IUserResponse,
     token: string,
   ) => {
     await AsyncStorage.setItem(RN_AUTH_TOKEN_STORAGE_KEY, token);
@@ -73,20 +67,18 @@ const AuthProvider = ({ children }:PropsWithChildren<Element>): JSX.Element => {
   const login = async (email: string) => {
     try {
       setLoginLoading(true);
-      const response = await api.get<IUserAuthenticateResponse>(
+      const response = await api.get<IUserResponse>(
         `/authenticate/${email}`,
       );
 
       const token = `Bearer ${response.headers['x-auth-token']}`;
       api.defaults.headers.Authorization = token;
-
+      response.data.user = email;
+      
       await persistUserData(response.data, token);
       setLoginLoading(false);
       setUserData({ user: email, _id: response.data._id });
       setAuthenticated(true);
-
-      console.log(`Successfully authenticated as ${email}`);
-      console.log(`Token ${token}`);
     } catch (err) {
       const { response } = err;
       if (response?.status === 404) {
@@ -100,7 +92,7 @@ const AuthProvider = ({ children }:PropsWithChildren<Element>): JSX.Element => {
 
   const handleUserSignUp = async (email: string) => {
     try {
-      const response = await api.post<IUserRegisterResponse>(
+      const response = await api.post<IUserResponse>(
         '/garbcollect/user',
         {
           user: email,
@@ -136,6 +128,7 @@ const AuthProvider = ({ children }:PropsWithChildren<Element>): JSX.Element => {
         },
         {
           text: 'Não',
+          onPress: () => setLoginLoading(false)
         },
       ],
     );

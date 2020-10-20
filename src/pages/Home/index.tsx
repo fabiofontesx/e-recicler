@@ -17,7 +17,6 @@ import api from '../../services/api';
 import { currencyFormat } from '../../utils/formaters';
 
 interface IRGetResum {
-  energy_spent: number;
   total_earned: number;
   total_recicled: number;
 }
@@ -26,9 +25,7 @@ const Home = ():JSX.Element => {
   const themeContext = useContext(ThemeContext);
   const { userData } = useAuth();
   const navigation = useNavigation();
-  const [userGarbageResum, setUserGarbageResum] = useState<IRGetResum>(
-    {} as IRGetResum,
-  );
+  const [userGarbageResum, setUserGarbageResum] = useState<IRGetResum>({total_earned: 0, total_recicled: 0});
   const [isLoading, setLoading] = useState(false);
   const goToNewDiscart = () => {
     navigation.navigate('NewDiscart');
@@ -38,11 +35,14 @@ const Home = ():JSX.Element => {
     useCallback(() => {
       const loadData = async () => {
         try {
-          setLoading(true);
-          const response = await api.get<IRGetResum>(
-            `prices/user/${userData?.user}`,
-          );
-          setUserGarbageResum(response.data);
+          if(userData && userData.user){
+            setLoading(true);
+            const response = await api.get<IRGetResum>(
+              `prices/user/${userData.user}`,
+            );
+            setUserGarbageResum(response.data);
+            return;
+          }
         } catch (error) {
           Alert.alert(
             'Erro ao buscar resumo',
@@ -73,7 +73,6 @@ const Home = ():JSX.Element => {
       <Logo />
       <Main>
         <WelcomeText>Bem Vindo!</WelcomeText>
-
         <CardInfo
           title="Total Reciclado"
           icon={<Lixeira width={24} height={24} />}
@@ -84,12 +83,6 @@ const Home = ():JSX.Element => {
           icon={<Dolar width={24} height={24} />}
           bodyText={currencyFormat(userGarbageResum.total_earned)}
         />
-        <CardInfo
-          title="Energia Gasta"
-          icon={<Luminaria width={24} height={24} />}
-          bodyText={`${userGarbageResum.energy_spent} W`}
-        />
-
         <PrimaryButton label="Novo Descarte" onPress={goToNewDiscart} />
       </Main>
     </Container>
